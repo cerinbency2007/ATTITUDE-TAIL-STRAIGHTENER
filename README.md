@@ -122,7 +122,7 @@ Open `index.html` directly in a web browser.
 
 **Screenshot 1:** Main interface of the Attitude Tail Straightener website showing the navigation bar, project title, and interactive controls.
 
-![Screenshot2](screenshot2.png)
+![Screenshot2]https://github.com/cerinbency2007/ATTITUDE-TAIL-STRAIGHTENER/commit/0b6a75a60bbd8942bd0b47c6b82b4f84128c8603
 
 **Screenshot 2:** Interactive control panel showing the tail straightening controls and servo-related interface.
 
