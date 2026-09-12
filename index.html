@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATTITUDE TAIL STRAIGHTENER | The Useless Engineering Project</title>
+  <meta name="description" content="Can we finally straighten the impossible? An interactive useless engineering rig attempting to straighten a dog's tail." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Canvas for Celebration Confetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top Navigation & Status -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="brand-icon">🐕‍🦺</div>
+        <div>ATTITUDE LABS <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 500;">v12.0</span></div>
+      </a>
+      <div class="nav-tags">
+        <div class="badge-tag live">
+          <span class="pulse-dot"></span>
+          <span>RIG ONLINE</span>
+        </div>
+        <button id="sound-toggle-btn" class="sound-toggle-btn" title="Toggle Sound FX">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-text">SFX: ON</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="proverb-ribbon">
+        <span>📜 Ancient Malayalam Physics:</span>
+        <span class="proverb-malayalam">"പട്ടിയുടെ വാല് പന്തീരാണ്ട് കൊല്ലം കുഴലിലിട്ടാലും നേരെയാവില്ല"</span>
+      </div>
+      <h1 class="hero-title">ATTITUDE TAIL <span>STRAIGHTENER</span></h1>
+      <p class="hero-subtitle">
+        Can we finally straighten the impossible? Armed with an <strong>Arduino Nano</strong>, a <strong>high-torque servo</strong>, and sheer stubbornness, we take on centuries of canine biology.
+      </p>
+    </header>
+
+    <!-- Main Laboratory Simulation Chamber -->
+    <section class="simulation-chamber" aria-label="Interactive Tail Straightening Simulation">
+      <!-- Chamber Header & Telemetry Pill -->
+      <div class="chamber-header">
+        <div class="chamber-title-group">
+          <div id="chamber-lamp" class="status-indicator-lamp ready"></div>
+          <span class="chamber-title">EXPERIMENTAL APPARATUS: CANINE-RECTIFIER-3000</span>
+        </div>
+        <div id="live-rig-status" class="telemetry-mini-pill">SYSTEM IDLE // READY FOR EXPERIMENT</div>
+      </div>
+
+      <!-- 4 Stages Progression Tracker -->
+      <div class="stages-tracker" id="stages-tracker">
+        <div class="stage-step-card" id="stage-1" data-stage="1">
+          <div class="stage-num">01</div>
+          <div class="stage-text-group">
+            <span class="stage-label">Phase 1</span>
+            <span class="stage-desc">Attitude Detected 😎</span>
+          </div>
+        </div>
+        <div class="stage-step-card" id="stage-2" data-stage="2">
+          <div class="stage-num">02</div>
+          <div class="stage-text-group">
+            <span class="stage-label">Phase 2</span>
+            <span class="stage-desc">Applying Correction...</span>
+          </div>
+        </div>
+        <div class="stage-step-card" id="stage-3" data-stage="3">
+          <div class="stage-num">03</div>
+          <div class="stage-text-group">
+            <span class="stage-label">Phase 3</span>
+            <span class="stage-desc">Straightening...</span>
+          </div>
+        </div>
+        <div class="stage-step-card" id="stage-4" data-stage="4">
+          <div class="stage-num">04</div>
+          <div class="stage-text-group">
+            <span class="stage-label">Phase 4</span>
+            <span class="stage-desc">ATTITUDE FIXED ✅</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Visual Rig Viewport (SVG Dog + Robotic Caliper) -->
+      <div class="rig-stage-viewport" id="rig-viewport">
+        <!-- Laser alignment guide line -->
+        <div class="laser-guide-line" id="laser-guide"></div>
+
+        <!-- Attitude Scanner Beam -->
+        <div class="attitude-scanner-beam" id="scanner-beam"></div>
+
+        <!-- Floating HUD Badges -->
+        <div class="rig-overlay-badge badge-attitude-level" id="rig-attitude-badge">
+          <span>SASSINESS:</span>
+          <strong id="rig-attitude-text">99.8% (CURLED)</strong>
+        </div>
+        <div class="rig-overlay-badge badge-servo-torque" id="rig-torque-badge">
+          <span>TORQUE:</span>
+          <strong id="rig-torque-text">0.0 kg·cm</strong>
+        </div>
+
+        <!-- Dynamic Articulated SVG Scene -->
+        <svg class="dog-rig-svg" viewBox="0 0 760 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Dog and tail robotic rig illustration">
+          <defs>
+            <!-- Drop shadows & Gradients -->
+            <filter id="gearShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+            </filter>
+            <linearGradient id="dogFur" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#d97706"/>
+            </linearGradient>
+            <linearGradient id="dogBelly" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fef3c7"/>
+              <stop offset="100%" stop-color="#fde68a"/>
+            </linearGradient>
+            <linearGradient id="metalCasing" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#334155"/>
+              <stop offset="100%" stop-color="#1e293b"/>
+            </linearGradient>
+            <linearGradient id="servoBlue" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0ea5e9"/>
+              <stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Shadow beneath the dog -->
+          <ellipse cx="260" cy="370" rx="160" ry="24" fill="rgba(0,0,0,0.3)" />
+
+          <!-- ==================== DOG BODY ==================== -->
+          <g id="dog-group" transform="translate(40, 30)">
+            <!-- Rear Paws -->
+            <ellipse cx="280" cy="330" rx="22" ry="14" fill="#b45309" />
+            <ellipse cx="220" cy="330" rx="22" ry="14" fill="#b45309" />
+
+            <!-- Body Torso -->
+            <ellipse cx="230" cy="245" rx="110" ry="80" fill="url(#dogFur)" />
+            <!-- Cute Belly spot -->
+            <ellipse cx="205" cy="265" rx="65" ry="50" fill="url(#dogBelly)" />
+
+            <!-- Front Paws -->
+            <ellipse cx="140" cy="335" rx="22" ry="14" fill="#b45309" />
+            <ellipse cx="180" cy="335" rx="22" ry="14" fill="#d97706" />
+
+            <!-- Dog Head -->
+            <g id="dog-head">
+              <!-- Floppy Ears -->
+              <path d="M 95 140 C 65 140 45 190 70 230 C 85 220 95 180 95 140 Z" fill="#92400e" />
+              <path d="M 175 140 C 205 140 225 190 200 230 C 185 220 175 180 175 140 Z" fill="#92400e" />
+              <!-- Head base -->
+              <circle cx="135" cy="175" r="55" fill="url(#dogFur)" />
+              <!-- Cute Muzzle -->
+              <ellipse cx="135" cy="198" rx="28" ry="22" fill="#fef3c7" />
+              <ellipse cx="135" cy="188" rx="10" ry="7" fill="#1f2937" />
+              <!-- Mouth tongue -->
+              <path d="M 130 205 Q 135 212 140 205" stroke="#991b1b" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <ellipse id="dog-tongue" cx="135" cy="214" rx="7" ry="9" fill="#f43f5e" />
+
+              <!-- Cute Eyes -->
+              <ellipse id="dog-eye-left" cx="118" cy="165" rx="7" ry="9" fill="#1e293b" />
+              <circle cx="120" cy="163" r="2.5" fill="#ffffff" />
+              <ellipse id="dog-eye-right" cx="152" cy="165" rx="7" ry="9" fill="#1e293b" />
+              <circle cx="154" cy="163" r="2.5" fill="#ffffff" />
+
+              <!-- Fun Safety Goggles / Scientist Monocle -->
+              <rect x="102" y="152" width="30" height="24" rx="8" fill="rgba(6, 182, 212, 0.35)" stroke="#06b6d4" stroke-width="3" />
+              <rect x="138" y="152" width="30" height="24" rx="8" fill="rgba(6, 182, 212, 0.35)" stroke="#06b6d4" stroke-width="3" />
+              <line x1="132" y1="164" x2="138" y2="164" stroke="#06b6d4" stroke-width="3" />
+              <line x1="95" y1="164" x2="102" y2="164" stroke="#06b6d4" stroke-width="2" />
+              <line x1="168" y1="164" x2="175" y2="164" stroke="#06b6d4" stroke-width="2" />
+
+              <!-- High-Tech Research Collar -->
+              <rect x="100" y="222" width="70" height="14" rx="6" fill="#0284c7" />
+              <circle cx="135" cy="235" r="7" fill="#fbbf24" stroke="#d97706" stroke-width="2" />
+            </g>
+          </g>
+
+          <!-- ==================== THE TAIL ==================== -->
+          <!-- The tail starts at rear of dog (x: 355, y: 265) -->
+          <g id="tail-assembly">
+            <!-- Shadow Layer -->
+            <path id="tail-shadow-path" class="tail-shadow-path" d="M 355 265 C 410 260 450 160 410 130 C 380 110 340 160 380 190" />
+            <!-- Main Orange Fur Layer -->
+            <path id="tail-main-path" class="tail-main-path" d="M 355 265 C 410 260 450 160 410 130 C 380 110 340 160 380 190" />
+            <!-- Core Highlight Layer -->
+            <path id="tail-core-path" class="tail-core-path" d="M 355 265 C 410 260 450 160 410 130 C 380 110 340 160 380 190" />
+            <!-- Fluffy tail tip ring -->
+            <circle id="tail-tip-fluff" cx="380" cy="190" r="14" fill="#fef08a" stroke="#d97706" stroke-width="3" />
+          </g>
+
+          <!-- ==================== ROBOTIC STRAIGHTENER RIG ==================== -->
+          <g id="robotic-apparatus">
+            <!-- Rig Mount Bracket on Dog's Back -->
+            <rect x="330" y="240" width="38" height="42" rx="6" fill="url(#metalCasing)" stroke="#475569" stroke-width="2" />
+            <circle cx="340" cy="250" r="3" fill="#94a3b8" />
+            <circle cx="340" cy="270" r="3" fill="#94a3b8" />
+            <circle cx="358" cy="250" r="3" fill="#94a3b8" />
+            <circle cx="358" cy="270" r="3" fill="#94a3b8" />
+
+            <!-- MG996R Servo Motor Housing -->
+            <g id="servo-motor" transform="translate(480, 220)">
+              <!-- Main Servo Box -->
+              <rect x="0" y="0" width="90" height="65" rx="8" fill="url(#metalCasing)" stroke="#0ea5e9" stroke-width="2" filter="url(#gearShadow)" />
+              <rect x="10" y="8" width="70" height="24" rx="4" fill="url(#servoBlue)" />
+              <text x="45" y="24" fill="#ffffff" font-size="9" font-weight="900" font-family="monospace" text-anchor="middle">MG996R-SERVO</text>
+              <text x="45" y="48" fill="#38bdf8" font-size="8" font-family="monospace" text-anchor="middle">HIGH-TORQUE 55N</text>
+
+              <!-- Blinking Status LED on Servo -->
+              <circle id="servo-led" cx="78" cy="52" r="4" fill="#10b981" />
+
+              <!-- Rotating Servo Wheel / Horn -->
+              <g id="servo-wheel" class="servo-wheel" transform="translate(45, 0)">
+                <circle cx="0" cy="0" r="18" fill="#e2e8f0" stroke="#64748b" stroke-width="3" />
+                <circle cx="0" cy="0" r="6" fill="#1e293b" />
+                <!-- Servo arm bar -->
+                <rect x="-4" y="-28" width="8" height="34" rx="4" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5" />
+                <circle cx="0" cy="-24" r="3" fill="#ffffff" />
+              </g>
+
+              <!-- Mechanical Linkage Rod connected to Clamps -->
+              <line id="linkage-arm" x1="45" y1="-24" x2="-15" y2="10" stroke="#f59e0b" stroke-width="5" stroke-linecap="round" />
+              <circle cx="-15" cy="10" r="5" fill="#fbbf24" stroke="#b45309" stroke-width="2" />
+            </g>
+
+            <!-- Dynamic Caliper Clamps -->
+            <g id="caliper-clamps">
+              <!-- Top Clamp Jaws -->
+              <g id="clamp-top" class="clamp-pad-top" transform="translate(0, 0)">
+                <path d="M 440 220 L 485 238 L 530 238 L 530 220 Z" fill="#475569" stroke="#64748b" stroke-width="2" />
+                <!-- Soft silicone padding -->
+                <rect x="445" y="238" width="80" height="9" rx="3" fill="#06b6d4" />
+              </g>
+
+              <!-- Bottom Clamp Jaws -->
+              <g id="clamp-bottom" class="clamp-pad-bottom" transform="translate(0, 0)">
+                <path d="M 440 310 L 485 292 L 530 292 L 530 310 Z" fill="#475569" stroke="#64748b" stroke-width="2" />
+                <!-- Soft silicone padding -->
+                <rect x="445" y="283" width="80" height="9" rx="3" fill="#06b6d4" />
+              </g>
+
+              <!-- Hydraulic Piston Shaft -->
+              <rect x="475" y="295" width="14" height="35" fill="#94a3b8" stroke="#475569" stroke-width="2" />
+              <rect x="470" y="325" width="24" height="12" rx="3" fill="#334155" />
+            </g>
+
+            <!-- Precision Laser Alignment Line directly in SVG -->
+            <line id="svg-laser-guide" x1="330" y1="265" x2="630" y2="265" stroke="#06b6d4" stroke-width="2" stroke-dasharray="6 4" opacity="0" />
+
+            <!-- Fun Sparks & Energy Arcs on Straightening -->
+            <g id="sparks-layer" class="spark-burst">
+              <path d="M 490 260 L 505 245 L 500 265 L 520 255 L 505 275 Z" fill="#fbbf24" />
+              <path d="M 420 265 L 435 250 L 430 270 L 445 260 L 432 280 Z" fill="#38bdf8" />
+              <circle cx="510" cy="265" r="3" fill="#ffffff" />
+              <circle cx="430" cy="255" r="2.5" fill="#ffffff" />
+            </g>
+          </g>
+        </svg>
+
+        <!-- Floor Depth Shadow -->
+        <div class="rig-floor-shadow"></div>
+      </div>
+
+      <!-- Action Button Bar -->
+      <div class="rig-action-bar">
+        <div class="primary-actions-group">
+          <!-- MAIN BUTTON -->
+          <button id="btn-straighten" class="btn-straighten">
+            <span>⚡ STRAIGHTEN THE TAIL</span>
+          </button>
+
+          <!-- RESET BUTTON -->
+          <button id="btn-reset" class="btn-secondary">
+            <span>🔄 Try Again</span>
+          </button>
+
+          <!-- COMICAL MALAYALAM PROVERB CHECK -->
+          <button id="btn-reality-check" class="btn-reality-check" title="Experience the ancient 12-year Malayalam physics invariant!">
+            <span>💥 Malayalam Reality Check</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Feedback Message Banner -->
+        <div id="action-banner" class="action-feedback-banner">
+          Ready for ignition. Click "STRAIGHTEN THE TAIL" to test modern engineering vs ancient wisdom!
+        </div>
+      </div>
+
+      <!-- Live Telemetry HUD Grid (Requested funny results) -->
+      <div class="telemetry-results-grid">
+        <!-- Attempts Counter -->
+        <div class="telemetry-card">
+          <div class="telemetry-icon">🎯</div>
+          <div class="telemetry-label">Attempts</div>
+          <div class="telemetry-value" id="hud-attempts-val">0</div>
+          <div class="telemetry-subtext">Total Rectifications</div>
+        </div>
+
+        <!-- Attitude Level -->
+        <div class="telemetry-card">
+          <div class="telemetry-icon">😎</div>
+          <div class="telemetry-label">Attitude Level</div>
+          <div class="telemetry-value high" id="hud-attitude-val">HIGH</div>
+          <div class="telemetry-subtext" id="hud-attitude-sub">Unapologetically Sassy</div>
+        </div>
+
+        <!-- Straightness Percentage -->
+        <div class="telemetry-card">
+          <div class="telemetry-icon">📏</div>
+          <div class="telemetry-label">Straightness</div>
+          <div class="telemetry-value" id="hud-straightness-val">0%</div>
+          <div class="telemetry-subtext" id="hud-straightness-sub">Pure Golden Spiral</div>
+        </div>
+
+        <!-- Mechanical Straightening Force -->
+        <div class="telemetry-card">
+          <div class="telemetry-icon">⚙️</div>
+          <div class="telemetry-label">Servo Force</div>
+          <div class="telemetry-value" id="hud-force-val">0 N</div>
+          <div class="telemetry-subtext" id="hud-force-sub">Standard Tension</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Secondary Grid: Interactive Control Panel & Before/After Comparison -->
+    <div class="grid-two-col">
+      <!-- Interactive Control Panel Card -->
+      <section class="control-panel-card" aria-label="Interactive Control Panel">
+        <div class="card-header-bar">
+          <h2 class="card-title">
+            <span>🎛️</span>
+            <span>Interactive Control Panel</span>
+          </h2>
+          <span class="badge-tag">MANUAL OVERRIDE</span>
+        </div>
+
+        <!-- Control 1: Servo Angle Slider -->
+        <div class="control-item">
+          <div class="control-label-row">
+            <label for="servo-angle-slider">Servo Angle (0° – 180°)</label>
+            <span class="control-val-badge" id="servo-angle-display">0°</span>
+          </div>
+          <input type="range" id="servo-angle-slider" class="range-slider" min="0" max="180" value="0" />
+          <p class="telemetry-subtext">Drag slider to manually control the robotic calipers in real time.</p>
+        </div>
+
+        <!-- Control 2: Straightening Force -->
+        <div class="control-item">
+          <div class="control-label-row">
+            <label for="force-slider">Straightening Force (N)</label>
+            <span class="control-val-badge" id="force-val-display">4,500 N</span>
+          </div>
+          <input type="range" id="force-slider" class="range-slider" min="200" max="9999" step="100" value="4500" />
+          <p class="telemetry-subtext">Higher force unlocks over-engineered hydraulic clamping power.</p>
+        </div>
+
+        <!-- Control 3: Pipe Immersion Duration (Malayalam Proverb Slider) -->
+        <div class="control-item">
+          <div class="control-label-row">
+            <label for="pipe-slider">Bamboo Pipe Duration (Years)</label>
+            <span class="control-val-badge" id="pipe-val-display">12 Years (പന്തീരാണ്ട്)</span>
+          </div>
+          <input type="range" id="pipe-slider" class="range-slider" min="1" max="25" step="1" value="12" />
+          <p class="telemetry-subtext">Empirically proven ineffective beyond 12 years (പന്തീരാണ്ട് കൊല്ലം).</p>
+        </div>
+
+        <!-- Control 4: Clamping Force Mode -->
+        <div class="control-item">
+          <label class="control-label-row">Clamping Grip Mode</label>
+          <div class="mode-pills-group" id="mode-pills">
+            <button class="mode-pill" data-mode="gentle">Gentle Paw</button>
+            <button class="mode-pill active" data-mode="rigorous">Rigorous Lab</button>
+            <button class="mode-pill" data-mode="overkill">OVERKILL ⚡</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Before / After Comparison Card -->
+      <section class="comparison-card" aria-label="Before and After Comparison">
+        <div class="card-header-bar">
+          <h2 class="card-title">
+            <span>🔬</span>
+            <span>Before & After Analysis</span>
+          </h2>
+          <span class="badge-tag">EMPIRICAL DATA</span>
+        </div>
+
+        <div class="compare-visual-split">
+          <!-- BENT TAIL SIDE -->
+          <div class="compare-side">
+            <span class="compare-badge bent">BEFORE: BENT TAIL</span>
+            <div class="compare-svg-preview">
+              <svg viewBox="0 0 160 110" width="130" height="90" fill="none">
+                <path d="M 25 90 C 70 85 110 30 75 18 C 45 10 30 45 65 65" stroke="#ea580c" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="65" cy="65" r="8" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+              </svg>
+            </div>
+            <div class="compare-stat-list">
+              <div class="compare-stat-row">
+                <span>Curvature</span>
+                <span>270° Spiral</span>
+              </div>
+              <div class="compare-stat-row">
+                <span>Attitude</span>
+                <span style="color: var(--accent-red)">100% Sassy</span>
+              </div>
+              <div class="compare-stat-row">
+                <span>Conformity</span>
+                <span>0.0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STRAIGHT TAIL SIDE -->
+          <div class="compare-side">
+            <span class="compare-badge straight">AFTER: STRAIGHT TAIL</span>
+            <div class="compare-svg-preview">
+              <svg viewBox="0 0 160 110" width="130" height="90" fill="none">
+                <line x1="15" y1="55" x2="145" y2="55" stroke="#06b6d4" stroke-width="14" stroke-linecap="round" />
+                <circle cx="145" cy="55" r="8" fill="#fef08a" stroke="#0284c7" stroke-width="2" />
+                <!-- Laser alignment line -->
+                <line x1="5" y1="55" x2="155" y2="55" stroke="rgba(6, 182, 212, 0.4)" stroke-width="2" stroke-dasharray="4 4" />
+              </svg>
+            </div>
+            <div class="compare-stat-list">
+              <div class="compare-stat-row">
+                <span>Curvature</span>
+                <span>0.00° Flat</span>
+              </div>
+              <div class="compare-stat-row">
+                <span>Attitude</span>
+                <span style="color: var(--accent-green)">0% FIXED ✅</span>
+              </div>
+              <div class="compare-stat-row">
+                <span>Conformity</span>
+                <span>100% Laser</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="telemetry-subtext" style="text-align: center; margin-top: 0.25rem;">
+          * Note: Laboratory straightening achieved via 55N MG996R servo torque. Invariant stability is subject to sudden spontaneous wagging.
+        </p>
+      </section>
+    </div>
+
+    <!-- "How It Works" Engineering Section -->
+    <section class="how-it-works-section" aria-label="How the Straightener Works">
+      <div class="section-header-block">
+        <span class="section-tag">Engineering Architecture</span>
+        <h2 class="section-title">How the Straightener Operates</h2>
+        <p class="section-description">
+          A meticulously over-engineered system designed to solve a problem that generations of Malayalam proverbs declared physically insolvable.
+        </p>
+      </div>
+
+      <div class="mechanisms-grid">
+        <!-- Mechanism 1: Microcontroller -->
+        <article class="mechanism-card">
+          <div class="mech-icon-box">🧠</div>
+          <h3 class="mech-card-title">1. Arduino Nano Sensor Brain</h3>
+          <p class="mech-card-body">
+            Equipped with proprietary stubbornness-detection firmware. The microcontroller monitors real-time canine posture and computes the exact cosine curvature required to counteract centuries of spiral inertia.
+          </p>
+          <div class="mech-spec-badge">ATmega328P // 16 MHz Clock</div>
+        </article>
+
+        <!-- Mechanism 2: High Torque Servo -->
+        <article class="mechanism-card">
+          <div class="mech-icon-box">🦾</div>
+          <h3 class="mech-card-title">2. MG996R Metal-Gear Servo</h3>
+          <p class="mech-card-body">
+            Standard plastic gears will shatter against a dog's proud attitude. Our brass metal-gear drive outputs up to 11 kg·cm of stall torque to gently yet decisively hold the tail in 180° geometric alignment.
+          </p>
+          <div class="mech-spec-badge">Stall Torque: 11 kg·cm @ 6.0V</div>
+        </article>
+
+        <!-- Mechanism 3: Mechanical Linkage -->
+        <article class="mechanism-card">
+          <div class="mech-icon-box">📐</div>
+          <h3 class="mech-card-title">3. 3D-Printed Caliper Linkage</h3>
+          <p class="mech-card-body">
+            A dual-opposed parallel linkage mechanism clad in medical-grade silicone pads ensures 100% comfort and zero doggo discomfort while mechanically outsmarting the Fibonacci curl.
+          </p>
+          <div class="mech-spec-badge">PETG 40% Infill // Soft TPU Pads</div>
+        </article>
+      </div>
+
+      <!-- Malayalam Proverb Deep Dive Banner -->
+      <aside class="proverb-deep-dive-card">
+        <div class="proverb-callout-icon">📜</div>
+        <div class="proverb-callout-content">
+          <h3 class="proverb-quote-title">
+            The Historical Context: <span>പന്തീരാണ്ട് കൊല്ലം കുഴലിലിട്ടാലും...</span>
+          </h3>
+          <p class="proverb-quote-desc">
+            In Malayalam culture, the phrase <em>"Pattiyude vaalu pantheerandu kollam kuzhalil ittaalum nere aavilla"</em> is famously quoted whenever someone's stubborn personality or mischievous habits refuse to change, no matter how much effort is applied. This useless engineering project finally asks: <strong>Did they simply lack sufficient servo torque and PID calibration?</strong>
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo-title">
+        <span>🐕‍🦺</span>
+        <span>ATTITUDE TAIL STRAIGHTENER PROJECT</span>
+      </div>
+      <p class="footer-disclaimer">
+        Built for College Useless Project Showcase & Hackathon events. 
+        Zero puppies were inconvenienced during this simulation. All attitude levels were procedurally calculated.
+      </p>
+      <div class="footer-keys-tip">
+        <span>💡 Pro Tip: Press <span class="kbd-key">SPACE</span> to Straighten &amp; <span class="kbd-key">R</span> to Reset</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
