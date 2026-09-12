@@ -166,7 +166,7 @@ Open `index.html` directly in a web browser.
 
 ### Video
 
-[Add your demo video link here]
+https://github.com/cerinbency2007/ATTITUDE-TAIL-STRAIGHTENER/commit/0b6a75a60bbd8942bd0b47c6b82b4f84128c8603
 
 The demo video shows the working Attitude Tail Straightener, including the interactive website, tail-straightening animation, controls, and the hardware mechanism.
 
