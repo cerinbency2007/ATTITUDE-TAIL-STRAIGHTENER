@@ -6,13 +6,12 @@
 
 **Project Name:** ATTITUDE TAIL STRAIGHTENER
 
-**Team Name:** [Team Name]
+WAG AND WIRE 
 
 ### Team Members
 
-- **Team Lead:** [Name] - [College]
-- **Member 2:** [Name] - [College]
-- **Member 3:** [Name] - [College]
+Cerin Bency-MBCCET
+
 
 ---
 
@@ -119,7 +118,7 @@ Open `index.html` directly in a web browser.
 
 #### Screenshots
 
-![Screenshot1](screenshot1.png)
+![Screenshot1]https://github.com/cerinbency2007/ATTITUDE-TAIL-STRAIGHTENER/commit/0b6a75a60bbd8942bd0b47c6b82b4f84128c8603
 
 **Screenshot 1:** Main interface of the Attitude Tail Straightener website showing the navigation bar, project title, and interactive controls.
 
