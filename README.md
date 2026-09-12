@@ -126,7 +126,7 @@ Open `index.html` directly in a web browser.
 
 **Screenshot 2:** Interactive control panel showing the tail straightening controls and servo-related interface.
 
-![Screenshot3](screenshot3.png)
+![Screenshot3]https://github.com/cerinbency2007/ATTITUDE-TAIL-STRAIGHTENER/commit/0b6a75a60bbd8942bd0b47c6b82b4f84128c8603
 
 **Screenshot 3:** Before and After analysis section showing the result of the tail straightening process.
 
